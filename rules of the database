@@ -1,0 +1,24 @@
+{
+  "rules": {
+    // Read and write are allowed until February 28, 2025
+    ".read": "now < given time stamp",  // Allow read until December 28, 2025
+    ".write": "now < given time stamp",  // Allow write until December 28, 2025
+
+    // Book data storage with specific structure
+    "books": {
+      "$book_id": {
+        // Allow read/write only to authenticated users (if using authentication)
+        ".read": "auth != null",  
+        ".write": "auth != null",
+
+        // Adding index for title, author, and genre to optimize queries
+        ".indexOn": ["title", "author", "genre"]
+      }
+    },
+
+    // Index issue_date for the issued books data
+    "issued_books": {
+      ".indexOn": ["issue_date"]  // Index issue_date for efficient querying
+    }
+  }
+}
